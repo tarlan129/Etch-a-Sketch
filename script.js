@@ -1,20 +1,23 @@
-let reSizeBtn = document.getElementById('resizeButton');
-
-
-
+const reSizeBtn = document.getElementById('resizeButton');
 
 function wrapedBoxes(size) {
     const container = document.getElementById('container');
     for (let i = 0; i < size * size; i++) {
         const box = document.createElement('div');
-        box.style.opacity = '0';
-        box.addEventListener('mouseover', (e) => {
-            e.target.style.backgroundColor = getRandomColor();
-            let currentOpacity = parseFloat(e.target.style.opacity);
-            if (currentOpacity < 1) {
-                e.target.style.opacity = (currentOpacity + 0.1).toString();
-            }
-        });
+            box.addEventListener('mouseover', (e) => {
+                if (!e.target.style.backgroundColor) {
+                e.target.style.backgroundColor = getRandomColor();
+                e.target.style.opacity = "0.1";
+                return;
+                }
+    
+                let x = parseFloat(e.target.style.opacity);
+            
+                if (x < 1) {
+                    x += 0.1;
+                    e.target.style.opacity = x.toString(); 
+                }
+            });
         box.classList.add('box');
         box.style.width = `${100 / size}%`;
         box.style.height = `${100 / size}%`;
@@ -24,7 +27,7 @@ function wrapedBoxes(size) {
     }
     
 }
-// wrapedBoxes(16);
+wrapedBoxes(16);
 
 reSizeBtn.addEventListener('click', () => {
     let newSize = prompt("Enter new size (1-100):");
